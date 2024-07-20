@@ -16,6 +16,7 @@ async def test_register_new_user_status_code(
         json={
             "email": "test@email.com",
             "password": "testtesttest",
+            "name": "Test Test",
         },
     )
 
@@ -31,6 +32,7 @@ async def test_register_new_user_creates_record_in_db(
         json={
             "email": "test@email.com",
             "password": "testtesttest",
+            "name": "Test Test",
         },
     )
 
@@ -56,6 +58,7 @@ async def test_register_new_user_cannot_create_already_created_user(
         json={
             "email": "test@email.com",
             "password": "testtesttest",
+            "name": "Test Test",
         },
     )
 
