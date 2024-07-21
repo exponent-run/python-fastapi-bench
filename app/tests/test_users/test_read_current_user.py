@@ -27,7 +27,7 @@ async def test_read_current_user_response(
         headers=default_user_headers,
     )
 
-    assert response.json() == {
-        "user_id": default_user_id,
-        "email": default_user_email,
-    }
+    response_json = response.json()
+    assert response_json["user_id"] == default_user_id
+    assert response_json["email"] == default_user_email
+    assert response_json["name"]
