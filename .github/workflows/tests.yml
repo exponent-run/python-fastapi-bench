@@ -42,13 +42,17 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v4
         with:
-          path: /opt/venv
+          path: |
+            ~/.cache/pypoetry
+            /opt/venv
           key: venv-${{ runner.os }}-python-3.12.2-${{ hashFiles('poetry.lock') }}
 
-      - name: Install dependencies and actiavte virtualenv
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      - name: Install dependencies and activate virtualenv
         run: |
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path /opt/venv
           poetry install --no-interaction --no-root
+          echo "/opt/venv/$(ls /opt/venv)/bin" >> $GITHUB_PATH
 
       - name: Run tests
         env:
@@ -56,4 +60,5 @@ jobs:
           DATABASE__HOSTNAME: localhost
           DATABASE__PASSWORD: postgres
         run: |
-          poetry run pytest
+          source /opt/venv/$(ls /opt/venv)/bin/activate
+          pytest
