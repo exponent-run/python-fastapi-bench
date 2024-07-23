@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
 
 from app.api.api_router import api_router, auth_router
 from app.core.config import get_settings
@@ -16,13 +15,6 @@ app = FastAPI(
 
 app.include_router(auth_router)
 app.include_router(api_router)
-
-
-# Health check
-@app.get("/health", response_class=JSONResponse, status_code=200)
-def health_check():
-    return {"status": "ok"}
-
 
 # Sets all CORS enabled origins
 app.add_middleware(
