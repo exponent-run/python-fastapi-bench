@@ -18,19 +18,6 @@ async def read_current_user(
     return current_user
 
 
-@router.delete(
-    "/me",
-    status_code=status.HTTP_204_NO_CONTENT,
-    description="Delete current user",
-)
-async def delete_current_user(
-    current_user: User = Depends(deps.get_current_user),
-    session: AsyncSession = Depends(deps.get_session),
-) -> None:
-    await session.execute(delete(User).where(User.user_id == current_user.user_id))
-    await session.commit()
-
-
 @router.post(
     "/reset-password",
     status_code=status.HTTP_204_NO_CONTENT,
